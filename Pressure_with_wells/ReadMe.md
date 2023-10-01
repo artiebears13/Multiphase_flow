@@ -30,7 +30,7 @@ Solve on grid 9x9 using finite difference method
 
 ## Solution:
 
-$q = (p - p_{bh})\frac{2\pi\rho k \Delta z}{\mu \ln(\frac{r_w}{r_e})}$ - Peaceman model
+$$q = (p - p_{bh})\frac{2\pi\rho k \Delta z}{\mu \ln(\frac{r_w}{r_e})}$$ - Peaceman model
 
 ![](pics/numeric_scheme.png)
 
