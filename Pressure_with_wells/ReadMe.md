@@ -1,6 +1,6 @@
 # Find pressure on grid with wells
 
-$-\frac{\partial^2p}{\partial x_1^2} -\frac{\partial^2 p}{\partial x_2^2} = q$
+$$-\frac{\partial^2p}{\partial x_1^2} -\frac{\partial^2 p}{\partial x_2^2} = q$$
 
 $\Omega = (0,1) \times (0,1)$ 
 
