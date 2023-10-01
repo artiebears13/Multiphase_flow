@@ -6,3 +6,5 @@ This repository offers solutions to 4 problems:
 1. [Finite element method](FEM)
 2. [Pressure with wells](Pressure_with_wells)
 3. [Buckley-Lewerett](Buckley-Lewerett)
+4. [Pressure solver with fracture](Fracture)
+

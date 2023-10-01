@@ -12,7 +12,7 @@ p = 500
 
 L = 10 ** 4
 A_ = 200000
-c_t = 10**-6 * A_
+c_t = 10 ** -6 * A_
 k_m = 0.01 * A_
 k_f = 50 * A_
 lambda_ = 100
@@ -24,10 +24,8 @@ pm_x0 = 500
 x_step = 500
 t_step = 0.01
 # t_end = 10
-t_end = 0.03
+t_end = 0.3
 N = int(L / x_step)
-
-
 
 
 def create_matrix(p_f_prev, p_m_prev):
@@ -35,7 +33,7 @@ def create_matrix(p_f_prev, p_m_prev):
     b = np.zeros(2 * N)
 
     # fill for m
-    for i in range(1, N -1):
+    for i in range(1, N - 1):
         for j in range(0, N):
             if i == j:
                 A[i][j] = phi_m * c_t / t_step + k_m / mu * 2 / (x_step ** 2) - lambda_
@@ -50,7 +48,7 @@ def create_matrix(p_f_prev, p_m_prev):
     A[N - 1][N - 2] = -1
     b[N - 1] = 0
     # fill for f
-    for i in range(N+1, 2 * N-1):
+    for i in range(N + 1, 2 * N - 1):
         for j in range(0, N):
             num = i - N
             if num == j:
@@ -58,25 +56,22 @@ def create_matrix(p_f_prev, p_m_prev):
                 A[i][j] = lambda_
             if j == num - 1 or j == num + 1:
                 A[i][j + N] = - k_f / mu * 1 / (x_step ** 2)
-        b[i] = phi_f * c_t / t_step * p_f_prev[i-N]
+        b[i] = phi_f * c_t / t_step * p_f_prev[i - N]
     A[N][N] = 1
     b[N] = pf_x0
     A[2 * N - 1][2 * N - 1] = 1
     A[2 * N - 1][2 * N - 2] = -1
-    b[2*N - 1] = 0
+    b[2 * N - 1] = 0
 
-    plt.imshow(A, cmap='viridis')
-    plt.colorbar()
-    plt.show()
-    # plt.plot(np.linspace(0, 200, 200), b )
+    # plt.imshow(A, cmap='viridis')
+    # plt.colorbar()
     # plt.show()
-
-    # print(A, b)
-
-    # print(A[100])
     return A, b
 
+
+
 def solver():
+    step = 1
     t = t_step
     p_f_prev = np.ones(N) * pf_t0
 
@@ -86,23 +81,25 @@ def solver():
     while t < t_end:
         A, b = create_matrix(p_f_prev, p_m_prev)
 
-        res = solve(A,b)
+        res = solve(A, b)
         # print(f"{res=}")
         p_m_prev = list(res)[:N]
-        p_f_prev = list(res)[N:2*N]
+        p_f_prev = list(res)[N:2 * N]
 
-        # print(f"{np.array(p_m_prev)-np.array(p_f_prev)=}")
-        # print(p_m_prev[10])
-        # print(p_f_prev[10])
+
         plt.plot(x, p_m_prev, label='p_m')
         plt.plot(x, p_f_prev, label='p_f')
-        plt.ylim(0,1000)
-        plt.legend()
+        plt.ylim(0, 1000)
+        plt.legend(loc='upper left')
+
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.title(f't={round(t,2)}')
+        plt.savefig(f'pictures/{step}.png')
         plt.show()
-        t+=t_step
 
-
-
+        t += t_step
+        step+=1
 
 
 if __name__ == '__main__':
